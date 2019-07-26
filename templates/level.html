@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{%block content%}
+
+<!-- Example row of columns -->
+<div class="row">
+
+{% if user and not user.is_anonymous %}
+
+  <nav class="navbar navbar-default">
+  <div class="container1">
+    <div class="navbar-header">
+      <button style="background-color:#f5f5f5" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span9 class="icon-bar"></span9>
+        <span9 class="icon-bar"></span9>
+        <span9 class="icon-bar"></span9>                        
+      </button>
+      <a href="/" style="color:#000" class="navbar-brand"><span92>🔍</span92><span91 style="margin-left:10px;font-family: 'Creepster', cursive;font-size:20px;opacity: 0.8;">Online Treasure Hunt</span91>
+      </a>
+<div class="navbar-brand" style="font-family:'Capriola',sans-serif;" >Your Score :   <span style="font-weight:bold;color:#5CB85C">{{player.score}} points</span></div>
+    
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+
+        <li><a style="font-family:'Capriola',sans-serif;" href="/rules">Rules</a></li>
+        <li><a style="font-family:'Capriola',sans-serif;" href="/lboard/">Leaderboard</a></li>
+        <li class="dropdown">
+          <button class="dropdown-toggle btn btn-default navbar-btn" data-toggle="dropdown" style="margin-left:10px;background-color:#f5f5f5" >
+           
+<b>{{ user.get_full_name|default:user.username }}</b>
+
+          <span9 class="caret"></span9>
+          </button>
+          
+          <ul class="dropdown-menu">
+        <li><a href="{% url 'auth:logout' %}?next={{ '/' }}"><b>Logout</b></a></li>
+          </ul>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+{% endif %}
+
+
+      <!-- Jumbotron -->
+
+      <div class="jumbotron border-shadow" style="margin-top:15px;background-color:rgba(255, 255, 255, 0.4);">
+        <img style="" src="{{level.image.url}}" width="200px"/>
+        
+      </div>
+
+
+
+        <div class="col-lg-6 rules border-shadow" style="padding:25px">
+          
+            {% block msgblock %}
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert {% if message.tags %} alert-{% if message.tags == "error" %}danger{% else %}{{ message.tags }}{% endif %}"{% endif %} role="alert">{{ message }}</div>
+            {% endfor %}
+            {% endif %}
+            {% endblock %}
+
+            </br>
+            <div class="lead" style="padding:10px; font-family: 'Montserrat', sans-serif;  ">
+            Q:
+            {{ level.text }}
+            </div>
+            </br>
+
+
+        Enter your answer:
+        <br>
+        <form id="ans" method="post" action="/answer/">
+            {% csrf_token %}
+            <br> <input type="text" name="ans" class="form-control" value="" size="50" autofocus/>
+            <br />
+
+            <input type="submit" class="btn btn-primary btn-lg btn-block" value="Submit" />
+        </form>
+        </div>
+
+      <div class="col-lg-6 padleft">
+        {%if level.audio.url != '/media/audios/default.mp3' %}
+
+              <div class="sidebox border-shadow" style="padding:15px;font-size: 20px">
+                <p>Audio Hint</p>
+                <audio controls="" src="{{level.audio.url}}">
+                </audio>
+              </div>
+        <hr>
+        {%endif%}
+
+        <div class="sidebox border-shadow" style="padding:15px">
+          <p style="font-size:24px;text-align:center;opacity:0.8">Number of people who crossed this level</p>
+          <p style="text-align:center;font-size:35px;color:green">{{level.numuser}}</p>
+          <p style="text-align:center;font-size:25px;color:#008080">Accuracy: {{level.accuracy}}</p>                    
+        </div>
+      </div>
+
+</div>
+
+{%endblock%}
+
