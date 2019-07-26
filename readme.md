@@ -31,7 +31,7 @@ python manage.py migrate
 python manage.py runserver
 
 ```
-* Head to server http://localhost:8000/calendar to view the app.
+* Head to server http://localhost:8000 to view the app.
 
 ## For Contribution
 
