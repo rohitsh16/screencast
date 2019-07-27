@@ -95,12 +95,22 @@
               </div>
         <hr>
         {%endif%}
+        
+        {%if level.hint%}
+              <div class="sidebox border-shadow" style="padding:15px">
+              <p style="font-size:20px;text-align:center">There goes a Hint</p>
+              <p style="text-align:center;font-size:18px;color:green">{{level.hint}}</p>
+              </div>
+          <hr>
+         
+        {%endif%}  
 
         <div class="sidebox border-shadow" style="padding:15px">
-          <p style="font-size:24px;text-align:center;opacity:0.8">Number of people who crossed this level</p>
+          <p style="font-size:20px;text-align:center;opacity:0.8">Number of people who crossed this level</p>
           <p style="text-align:center;font-size:35px;color:green">{{level.numuser}}</p>
           <p style="text-align:center;font-size:25px;color:#008080">Accuracy: {{level.accuracy}}</p>                    
         </div>
+
       </div>
 
 </div>

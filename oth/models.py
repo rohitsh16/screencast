@@ -22,12 +22,21 @@ class level(models.Model):
     numuser = models.IntegerField(default=0)
     accuracy = models.FloatField(default=0)
     wrong = models.IntegerField(default=0)
+    hint = models.TextField(blank=True)
 
     def __str__(self):
         return self.text
+
+        
 
 class total_level(models.Model):
     totallevel = models.IntegerField(default=100)
 
     def __str__(self):
         return str(self.totallevel)
+
+class next_quiz_time(models.Model):
+    date = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return str(self.next_quiz_time)        
