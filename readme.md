@@ -19,6 +19,15 @@ source env/bin/activate
 pip install -r requirements.txt
 ```
 
+* Set the following environment variables either in your terminal
+  or inside a `.env` file that would reside inside `screencast/` dir.
+```
+SOCIAL_AUTH_FACEBOOK_KEY
+SOCIAL_AUTH_FACEBOOK_SECRET
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET
+```
+
 * Run the Migrations
 ```
 python manage.py makemigrations
