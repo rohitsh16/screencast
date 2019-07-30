@@ -27,14 +27,6 @@ class level(models.Model):
     def __str__(self):
         return self.text
 
-        
-
-class total_level(models.Model):
-    totallevel = models.IntegerField(default=100)
-
-    def __str__(self):
-        return str(self.totallevel)
-
 class next_quiz_time(models.Model):
     date = models.DateTimeField(null=True, blank=True)
 

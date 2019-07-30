@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import models
 from django.contrib import messages
+from django.conf import settings
 from oth import models
 import datetime
 
@@ -11,8 +12,7 @@ def landing(request):
 
 def index(request):
 
-    m_level = models.total_level.objects.get(id=1)
-    lastlevel = m_level.totallevel
+    lastlevel = settings.TOTAL_LEVELS
 
     user = request.user
     if user.is_authenticated:
@@ -52,8 +52,7 @@ def save_profile(backend, user, response, *args, **kwargs):
 @login_required
 def answer(request):
     
-    m_level = models.total_level.objects.get(id=1)
-    lastlevel = m_level.totallevel
+    lastlevel = settings.TOTAL_LEVELS
     # print(lastlevel)
 
     ans = ""
