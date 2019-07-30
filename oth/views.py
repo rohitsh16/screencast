@@ -7,10 +7,13 @@ from django.conf import settings
 from oth import models
 import datetime
 
-def landing(request):
-    return render(request, 'landing.html')
 
 def index(request):
+    event_date = datetime.datetime(2019, 8, 25, 22, 0, 0)
+
+    if settings.MODE == 'PROD':
+        if datetime.datetime.now() < event_date:
+            return render(request, 'landing.html')
 
     lastlevel = settings.TOTAL_LEVELS
 
