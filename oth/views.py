@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import models
 from django.contrib import messages
@@ -139,12 +139,11 @@ def lboard_api(request):
         players_list.append({
             'name':pl.name,
             'rank':pl.rank,
-            'email':'',
             'score':pl.score,
         })
         current_rank += 1
     #In order to allow non-dict objects to be serialized set the safe parameter to False
-    return Response(players_list,safe=False)
+    return JsonResponse(players_list,safe=False)
 
 
 class PlayerList(APIView):
