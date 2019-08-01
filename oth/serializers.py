@@ -7,8 +7,8 @@ class PlayerSerializer(serializers.ModelSerializer):
         model=player
         fields=("user","name","current_level","score","rank","timestamp")
 
-class levelSerializer(serializers.ModelSerializer):
+class levelSerializer(serializers.HyperlinkedModelSerializer):
     #player=PlayerSerializer(many=True)
     class Meta:
         model=level
-        fields=("l_number","text","answer","numuser","accuracy","wrong","hint")
+        fields=("l_number","image","audio","text","answer","numuser","accuracy","wrong","hint")
