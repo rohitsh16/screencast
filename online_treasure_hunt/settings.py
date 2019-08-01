@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'social_django',
     'oth',
+    'rest_framework',
 )
 
 MIDDLEWARE_CLASSES = (

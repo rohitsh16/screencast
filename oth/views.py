@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import models
@@ -6,7 +6,18 @@ from django.contrib import messages
 from django.conf import settings
 from oth import models
 import datetime
+import json
+from django.core import serializers
+from rest_framework import status, generics
+from rest_framework.views import APIView
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.parsers import JSONParser
+from .serializers import PlayerSerializer, levelSerializer
+from .models import player, level
 
+
+@api_view(['GET','POST'])
 
 def index(request):
     event_date = datetime.datetime(2019, 8, 25, 22, 0, 0)
@@ -114,3 +125,44 @@ def lboard(request):
 
 def rules(request):
     return render(request, 'index_page.html')
+
+"""   API  """
+
+def lboard_api(request):
+    p = models.player.objects.order_by('-score','timestamp')
+    current_rank = 1
+
+    players_list = []
+
+    for pl in p:
+        pl.rank = current_rank
+        players_list.append({
+            'name':pl.name,
+            'rank':pl.rank,
+            'email':'',
+            'score':pl.score,
+        })
+        current_rank += 1
+    #In order to allow non-dict objects to be serialized set the safe parameter to False
+    return Response(players_list,safe=False)
+
+
+class PlayerList(APIView):
+    def get(self,request,format=None):
+        Player=player.objects.all()
+        serializer=PlayerSerializer(Player, many=True)
+        return Response(serializer.data)  
+
+    def post(self,request,format=None):
+        serializer=PlayerSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()  
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+
+class LevelList(APIView):
+    def get(self,request,format=None):
+        Level=level.objects.all()
+        serializer=levelSerializer(Level,many=True)
+        return Response(serializer.data)
