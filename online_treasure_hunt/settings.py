@@ -41,9 +41,12 @@ INSTALLED_APPS = (
     'social_django',
     'oth',
     'rest_framework',
+    'corsheaders',  # new
 )
 
 MIDDLEWARE_CLASSES = (
+    'corsheaders.middleware.CorsMiddleware', # new
+    'django.middleware.common.CommonMiddleware', # new
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -53,6 +56,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
 )
+
+CORS_ORIGIN_WHITELIST = ['http://localhost:8000',
+]
 
 ROOT_URLCONF = 'online_treasure_hunt.urls'
 
