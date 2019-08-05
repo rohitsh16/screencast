@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import player, level1, level2, level3
+from .models import player, level, level2, level3
 
 class PlayerSerializer(serializers.ModelSerializer):
     class Meta:
@@ -10,7 +10,7 @@ class PlayerSerializer(serializers.ModelSerializer):
 class levelSerializer1(serializers.HyperlinkedModelSerializer):
     #player=PlayerSerializer(many=True)
     class Meta:
-        model=level1
+        model=level
         fields=("l_number","image","audio","text","answer","numuser","accuracy","wrong","hint")
 
 

@@ -13,7 +13,7 @@ class player(models.Model):
     def __str__(self):
         return self.name
 
-class level1(models.Model):
+class level(models.Model):
     l_number = models.IntegerField()
     image = models.ImageField(upload_to = 'images',default='images/level1.jpg')
     audio = models.FileField(upload_to = 'audios',default='audios/default.mp3')

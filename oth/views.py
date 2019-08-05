@@ -14,7 +14,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
 from .serializers import PlayerSerializer, levelSerializer1, levelSerializer2, levelSerializer3
-from .models import player, level1, level2, level3
+from .models import player, level, level2, level3
 
 
 @api_view(['GET','POST'])
