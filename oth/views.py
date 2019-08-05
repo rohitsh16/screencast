@@ -96,7 +96,8 @@ def answer(request):
     # print level.answer
     if ans == level.answer:
         #print level.answer
-        player.current_level = player.current_level + 1
+        #player.current_level = player.current_level + 1
+        player.current_question = player.current_question + 1
         player.score = player.score + 10
         player.timestamp = datetime.datetime.now()
         level.numuser = level.numuser + 1
@@ -105,15 +106,15 @@ def answer(request):
         player.save()
         
         try:
-            level = models.level.objects.get(l_number=player.current_level)
+            level = models.level.objects.get(l_number=player.current_question)
             #return render(request, 'level_transition.html')
-            if player_level.level_number == 1:
+            if player.current_level == 1:
                 return render(request, 'level.html', {'player': player, 'level': level})
 
-            elif player_level.level_number == 2:
+            elif player.current_level == 2:
                 return render(request, 'level.html', {'player': player, 'level': level2})
 
-            elif player_level.level_number == 3:
+            elif player.current_level == 3:
                 return render(request, 'level.html', {'player': player, 'level': level3})
             
         except:
