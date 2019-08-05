@@ -14,12 +14,10 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
 from .serializers import PlayerSerializer, levelSerializer1, levelSerializer2, levelSerializer3
-from .models import player, level, level2, level3
+from .models import player, level, level2, level3, player_level
 
 
 @api_view(['GET','POST'])
-
-
 
 def index(request):
     event_date = datetime.datetime(2019, 8, 25, 22, 0, 0)
@@ -105,17 +103,24 @@ def answer(request):
         level.accuracy = round(level.numuser/(float(level.numuser + level.wrong)),2)
         level.save()
         player.save()
-        '''
+        
         try:
             level = models.level.objects.get(l_number=player.current_level)
-            return render(request, 'level_transition.html')
+            #return render(request, 'level_transition.html')
+            if player_level.level_number == 1:
+                return render(request, 'level.html', {'player': player, 'level': level})
 
-            return render(request, 'level.html', {'player': player, 'level': level})
+            elif player_level.level_number == 2:
+                return render(request, 'level.html', {'player': player, 'level': level2})
+
+            elif player_level.level_number == 3:
+                return render(request, 'level.html', {'player': player, 'level': level3})
+            
         except:
             if player.current_level > lastlevel:
                 return render(request, 'win.html', {'player': player}) 
             return render(request, 'finish.html', {'player': player})
-    '''
+        '''
         try:
             level = models.level.objects.get(l_number=player.current_level)
             #return render(request, 'level_transition.html')
@@ -144,7 +149,7 @@ def answer(request):
             if player.current_level > lastlevel:
                 return render(request, 'win.html', {'player': player}) 
             return render(request, 'finish.html', {'player': player})
-    
+        '''
     elif ans=="":
         pass 
         # messages.error(request, "Please enter answer!")
@@ -155,15 +160,8 @@ def answer(request):
 
         messages.error(request, "Wrong Answer!, Try Again")
 
-    if time1 == True and player.current_level <= 4:
-        return render(request, 'level.html', {'player': player, 'level': level})
-
-    if time1 == True and time2 == True and player.current_level >= 4 :
-        return render(request, 'level.html', {'player': player, 'level': level})
     
-
-    else:
-        return render(request, 'finish.html', {'player': player})  
+    return render(request, 'finish.html', {'player': player})  
 
 
 def lboard(request):

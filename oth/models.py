@@ -56,8 +56,8 @@ class level3(models.Model):
         return self.text
 
 
-class next_quiz_time(models.Model):
-    date = models.DateTimeField(null=True, blank=True)
+class player_level(models.Model):
+    level_number = models.IntegerField(default=1)
 
     def __str__(self):
         return str(self.next_quiz_time)        
