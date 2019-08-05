@@ -222,13 +222,13 @@ class LevelList1(APIView):
 
 class LevelList2(APIView):
     def get(self,request,format=None):
-        Level=level.objects.all()
+        Level=level2.objects.all()
         serializer=levelSerializer2(Level,many=True)
         return Response(serializer.data)
 
 
 class LevelList3(APIView):
     def get(self,request,format=None):
-        Level=level.objects.all()
+        Level=level3.objects.all()
         serializer=levelSerializer3(Level,many=True)
         return Response(serializer.data)
