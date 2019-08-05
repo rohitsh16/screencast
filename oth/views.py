@@ -19,6 +19,8 @@ from .models import player, level
 
 @api_view(['GET','POST'])
 
+
+
 def index(request):
     event_date = datetime.datetime(2019, 8, 25, 22, 0, 0)
 
@@ -66,6 +68,19 @@ def save_profile(backend, user, response, *args, **kwargs):
 @login_required
 def answer(request):
     
+    time1 = False
+    time2 = False
+    CurrentDate = datetime.datetime.now()
+    ExpectedDate1 = "5/8/2019 17:12"
+    ExpectedDate2 = "5/8/2019 17:15"
+    ExpectedDate1 = datetime.datetime.strptime(ExpectedDate1, "%d/%m/%Y %H:%M")
+    ExpectedDate2 = datetime.datetime.strptime(ExpectedDate2, "%d/%m/%Y %H:%M")
+    if CurrentDate > ExpectedDate1:
+        time1 = True
+
+    if CurrentDate > ExpectedDate2:
+        time2 = True
+    
     lastlevel = settings.TOTAL_LEVELS
     # print(lastlevel)
 
@@ -90,7 +105,7 @@ def answer(request):
         level.accuracy = round(level.numuser/(float(level.numuser + level.wrong)),2)
         level.save()
         player.save()
-
+        '''
         try:
             level = models.level.objects.get(l_number=player.current_level)
             return render(request, 'level_transition.html')
@@ -100,17 +115,55 @@ def answer(request):
             if player.current_level > lastlevel:
                 return render(request, 'win.html', {'player': player}) 
             return render(request, 'finish.html', {'player': player})
+    '''
+        try:
+            level = models.level.objects.get(l_number=player.current_level)
+            #return render(request, 'level_transition.html')
+
+            if player.current_level <= 2:
+                return render(request, 'level.html', {'player': player, 'level': level})
+
+            if player.current_level > 2 and time1 == False:
+                return render(request, 'finish.html', {'player': player})
+
+            if player.current_level > 2 and player.current_level <= 4 and time1 == True:  
+                return render(request, 'level.html', {'player': player, 'level': level})
+               
+            if player.current_level >= 4 and time2 == False: 
+                return render(request, 'finish.html', {'player': player}) 
+
+            if player.current_level >= 4 and player.current_level < 6 and time2 == True:  
+                return render(request, 'level.html', {'player': player, 'level': level})
+
+            if player.current_level >= 6:  
+                return render(request, 'win.html', {'player': player})  
+        
+
+            #return render(request, 'level.html', {'player': player, 'level': level})
+        except:
+            if player.current_level > lastlevel:
+                return render(request, 'win.html', {'player': player}) 
+            return render(request, 'finish.html', {'player': player})
+    
     elif ans=="":
         pass 
         # messages.error(request, "Please enter answer!")
 
-    else:
+    else :
         level.wrong = level.wrong + 1
         level.save()
 
         messages.error(request, "Wrong Answer!, Try Again")
 
-    return render(request, 'level.html', {'player': player, 'level': level})
+    if time1 == True and player.current_level <= 4:
+        return render(request, 'level.html', {'player': player, 'level': level})
+
+    if time1 == True and time2 == True and player.current_level >= 4 :
+        return render(request, 'level.html', {'player': player, 'level': level})
+    
+
+    else:
+        return render(request, 'finish.html', {'player': player})  
 
 
 def lboard(request):
