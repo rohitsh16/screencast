@@ -13,8 +13,8 @@ from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
-from .serializers import PlayerSerializer, levelSerializer
-from .models import player, level
+from .serializers import PlayerSerializer, levelSerializer1, levelSerializer2, levelSerializer3
+from .models import player, level1, level2, level3
 
 
 @api_view(['GET','POST'])
@@ -213,8 +213,22 @@ class PlayerList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 
-class LevelList(APIView):
+class LevelList1(APIView):
     def get(self,request,format=None):
         Level=level.objects.all()
-        serializer=levelSerializer(Level,many=True)
+        serializer=levelSerializer1(Level,many=True)
+        return Response(serializer.data)
+
+
+class LevelList2(APIView):
+    def get(self,request,format=None):
+        Level=level.objects.all()
+        serializer=levelSerializer2(Level,many=True)
+        return Response(serializer.data)
+
+
+class LevelList3(APIView):
+    def get(self,request,format=None):
+        Level=level.objects.all()
+        serializer=levelSerializer3(Level,many=True)
         return Response(serializer.data)
