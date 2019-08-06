@@ -1,4 +1,4 @@
-Django==1.11.22
+Django==1.11.23
 Pillow==5.2.0
 djangorestframework==3.9.1
 social-auth-app-django==2.1.0
