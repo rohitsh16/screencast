@@ -9,4 +9,4 @@ python-decouple==3.1
 python-social-auth==0.3.6
 python3-openid==3.1.0
 social-auth-app-django==2.1.0
-social-auth-core==1.7.0
+social-auth-core==6.2.0
